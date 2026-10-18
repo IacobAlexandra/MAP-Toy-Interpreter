@@ -1,0 +1,18 @@
+Prg ::= Stmt
+Stmt ::= Stmt1 ; Stmt2                  (CompStmt)
+         | Type Id                      (VarDeclStmt)
+         | Id = Exp                     (AssignStmt)
+         | print(Exp)                     (PrintStmt)
+         | if Exp then Stmt1 else Stmt2     (IfStmt)
+         | nop                              (NopStmt)
+
+Type ::= int | bool
+
+Value ::= Number                    (IntValue)
+        | true | false              (BoolValue)
+
+Exp ::= Value                       (ValueExp)
+        | Id                             (VarExp)
+        | Exp1 + Exp2 | Exp1 - Exp2       (ArithExp)
+        | Exp1 * Exp2 | Exp1 / Exp2
+        | Exp1 and Exp2 | Exp1 or Exp2     (LogicExp)
