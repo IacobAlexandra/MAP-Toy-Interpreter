@@ -1,4 +1,19 @@
 package interpreter.model.adt;
 
-public class MyList {
+import interpreter.exceptions.ADTException;
+import java.util.ArrayList;
+
+public class MyList<T> implements IList<T>{
+    //OBS: ArrayList is indexed from 0, [0, size)
+    private final ArrayList<T> list = new ArrayList<>();
+
+    @Override public void add(T value){ list.add(value);}
+    @Override public T get(int index) throws ADTException{
+        if (index < 0 || index >= list.size())
+            throw new ADTException("Index is not valid.");
+        return list.get(index);
+    }
+    @Override public int size(){
+        return list.size();
+    }
 }
