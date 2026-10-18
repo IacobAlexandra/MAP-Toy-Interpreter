@@ -1,8 +1,7 @@
 package interpreter.exceptions;
 
-public class ADTException extends Exception{
+public class ADTException extends MyException{
     public ADTException(String message){
-        super(message); // call Exception constructor, which calls Throwable constructor,
-        // which provides the getMessage() method
+        super(message);
     }
 }

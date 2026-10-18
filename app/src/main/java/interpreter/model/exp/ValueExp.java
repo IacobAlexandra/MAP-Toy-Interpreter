@@ -1,4 +1,12 @@
 package interpreter.model.exp;
 
-public class ValueExp {
+import interpreter.model.adt.IDictionary;
+import interpreter.model.value.IValue;
+
+// (returns its value)
+public record ValueExp(IValue value) implements IExp{
+
+    @Override public IValue eval(IDictionary<String, IValue> symTable) {
+        return value;
+    }
 }
