@@ -1,7 +1,11 @@
 package interpreter.model.stmt;
 
-import interpreter.model.value.IValue;
+import interpreter.exceptions.*;
+import interpreter.model.PrgState;
+import interpreter.model.exp.*;
+import interpreter.model.value.*;
 
+// Rule S2 - Id = Exp
 public record AssignStmt(String id, IExp exp) implements IStmt { // S2
     @Override
     public PrgState execute(PrgState state) throws MyException {

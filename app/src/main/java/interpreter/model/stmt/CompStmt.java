@@ -1,6 +1,11 @@
 package interpreter.model.stmt;
 
-public record CompStmt(IStmt first, IStmt second) implements IStmt { // S1
+import interpreter.model.PrgState;
+
+// Rule S1 - Stmt1 ; Stmt2
+
+//COMPOUND COMPOUND COMPOUND Statement
+public record CompStmt(IStmt first, IStmt second) implements IStmt {
     @Override
     public PrgState execute(PrgState state) {
         state.getExeStack().push(second);

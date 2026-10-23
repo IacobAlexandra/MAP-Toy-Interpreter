@@ -7,6 +7,10 @@ import interpreter.model.value.*;
 //  (and, or – both operands must be booleans)
 public record LogicExp(LogicOp op, IExp left, IExp right) implements IExp {
 
+    // NOTE: instanceof does 2 things here:
+    //  1. Verifies if left is a bool
+    //  2. extract left's value in b1
+    //(use left.eval(symTable) instanceof IntValue if u only want the verification)
     @Override
     public IValue eval(IDictionary<String, IValue> symTable) throws MyException{
 
