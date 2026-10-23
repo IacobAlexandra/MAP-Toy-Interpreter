@@ -28,4 +28,5 @@ public class MyDictionary<K, V> implements IDictionary<K, V> {
         dictionary.put(key, value);
 
     }
+    @Override public String toString() {return dictionary.toString();}
 }

@@ -16,4 +16,5 @@ public class MyList<T> implements IList<T>{
     @Override public int size(){
         return list.size();
     }
+    @Override public String toString() {return list.toString();}
 }
