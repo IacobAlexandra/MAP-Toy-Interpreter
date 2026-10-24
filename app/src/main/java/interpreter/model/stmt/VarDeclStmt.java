@@ -11,7 +11,7 @@ public record VarDeclStmt(String name, IType type) implements IStmt{
     @Override
     public PrgState execute(PrgState state) throws MyException{
         // We just declare, no assignment yet, no "actual" value
-        // So we'll initialise it with de default value for its type.
+        // So we'll initialize it with de default value for its type.
         //like saying "int i; => i = 0;" just a workaround, ig
 
         var symTable =  state.getSymTable();
@@ -26,4 +26,6 @@ public record VarDeclStmt(String name, IType type) implements IStmt{
         //NOTE: I believe it's redundant to return the Prg State, right? Could've used void
             // cus we already make the changes in the original object
     }
+    @Override
+    public String toString() { return type + " " + name;}
 }

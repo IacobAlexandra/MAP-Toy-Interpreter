@@ -1,10 +1,12 @@
 package interpreter;
 
+import interpreter.view.View;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Toy interpreter");
+        new View().run();
     }
 }
 
-// .\gradlew.bat build
-// .\gradlew.bat run
+// .\gradlew build
+// .\gradlew run

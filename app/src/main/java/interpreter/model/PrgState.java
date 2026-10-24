@@ -19,7 +19,7 @@ public class PrgState {
         exeStack.push(program);
     }
 
-    // To ask: De ce facem si settere? Le vom folosi in urmatoarele assignemnt-uri sau ni s-a cerut
+    // To ask: De ce facem si settere? Le vom folosi in urmatoarele assignment-uri sau ni s-a cerut
     //sa le cream doar ptc e good practice sa fie acolo?...
 
     public IStack<IStmt> getExeStack() {
@@ -32,7 +32,7 @@ public class PrgState {
 
     public IList<IValue> getOut() {
         return out;
-    }                    // asa ma simt
+    }
 
     public IStmt getOriginalProgram() {
         return originalProgram;
@@ -51,6 +51,6 @@ public class PrgState {
     }
 
     @Override public String toString() {
-        return exeStack.toString() + " | " + symTable.toString() + " | " + out.toString();
+        return String.format("%-90s | %-25s | %s",exeStack, symTable, out);
     }
 }

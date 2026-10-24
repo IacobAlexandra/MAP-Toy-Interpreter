@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CompStmtTest {
     @Test
-    void executeCompStmtPushesOnStack() throws ADTException { //semnat, sefa la numit teste
+    void executeCompStmtPushesOnStack() throws ADTException {
         MyStack<IStmt> exeStack = new MyStack<>();
         MyDictionary<String, IValue> symtable = new MyDictionary<>();
         MyList<IValue> out = new MyList<>();

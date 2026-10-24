@@ -9,5 +9,5 @@ public record ValueExp(IValue value) implements IExp{
     @Override public IValue eval(IDictionary<String, IValue> symTable) {
         return value;
     }
-    @Override String toString(){ return value.toString();}
+    @Override public String toString(){ return value.toString();}
 }

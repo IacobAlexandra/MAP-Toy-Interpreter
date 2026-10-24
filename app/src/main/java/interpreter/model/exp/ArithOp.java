@@ -7,4 +7,5 @@ public enum ArithOp {
     ArithOp(String symbol) {
         this.symbol = symbol;
     }
+
 }

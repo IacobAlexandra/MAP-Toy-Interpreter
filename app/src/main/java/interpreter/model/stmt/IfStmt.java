@@ -32,5 +32,7 @@ public record IfStmt(IExp cond, IStmt thenS, IStmt elseS) implements IStmt {
         }
         return state;
     }
+    @Override
+    public String toString() {return "(if " + cond + " then " + thenS + " else " + elseS + ")";}
 
 }

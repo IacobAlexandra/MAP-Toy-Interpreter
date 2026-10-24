@@ -21,12 +21,8 @@ public class Controller {
 
     //display – prints the program state after each step when a display flag is set
     // (see the trace in section 3.3)
-    //UGLY
-    //its an execution trace, logs.
     private void display(PrgState prg){
-        if(displayFlag)
-
-            System.out.println(prg);
+        if (displayFlag) {System.out.println(prg);}
     }
 
     //one-step execution – executes the statement on top of the ExeStack (one rule S1–S6)
@@ -41,6 +37,9 @@ public class Controller {
     // complete execution – executes until the ExeStack is empty;
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
+
+        if (displayFlag) {
+            System.out.printf("%-90s | %-25s | %s%n", "ExeStack", "SymTable", "Out");}
 
         display(prg); // only if the display flag is on
 
