@@ -17,7 +17,8 @@ application {
     mainClass = "interpreter.Main"
 }
 tasks.named<JavaExec>("run") {
-    standardInput = System.`in` // keyboard input for the text menu
+    standardInput = System.`in`
+    workingDir = rootDir
 }
 tasks.named<Test>("test") {
     useJUnitPlatform()
