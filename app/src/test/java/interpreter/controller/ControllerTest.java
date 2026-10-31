@@ -16,17 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 // The HTML report is in app/build/reports/tests/test/index.html.
 class ControllerTest {
     private static PrgState run(IStmt program) throws MyException {
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(),
-                new MyList<>(), program);
+        PrgState state = PrgState.of(program);
         new Controller(new Repository(state), false).allStep(); // display off
         return state;
     }
 
     @Test
     void emptyStack() throws MyException {
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(),
-                            new MyList<>(), new NopStmt());
-
+        PrgState state = PrgState.of(new NopStmt());
         //NOTE: the PrgState constructor automatically adds the
         //  program on the stack ( exeStack.push(program); )
 

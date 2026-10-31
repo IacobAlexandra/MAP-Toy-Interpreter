@@ -2,6 +2,7 @@ package interpreter.model.adt;
 
 import interpreter.exceptions.ADTException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyList<T> implements IList<T>{
     //OBS: ArrayList is indexed from 0, [0, size)
@@ -17,4 +18,9 @@ public class MyList<T> implements IList<T>{
         return list.size();
     }
     @Override public String toString() {return list.toString();}
+
+    // "in insertion order" (so, its normal order)
+    @Override public List<T> toList(){
+        return List.copyOf(list);
+    }
 }

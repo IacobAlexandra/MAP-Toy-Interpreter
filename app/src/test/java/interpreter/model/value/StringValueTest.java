@@ -13,13 +13,10 @@ public class StringValueTest {
     void stringVariableDefaultsToEmptyString() throws MyException {
         VarDeclStmt declaration = new VarDeclStmt("text", new StringType());
 
-        PrgState state = new PrgState(new interpreter.model.adt.MyStack<>(), new interpreter.model.adt.MyDictionary<>(),
-                new interpreter.model.adt.MyList<>(), declaration
-        );
-
+        PrgState state = PrgState.of(declaration);
         declaration.execute(state);
 
-        assertEquals(state.getSymTable().lookup("text"),new StringValue(""));
+        assertEquals(new StringValue(""),state.getSymTable().lookup("text"));
     }
 
     @Test

@@ -16,17 +16,13 @@ public class PrintStmtTest{
 
     @Test
     void printsInOut() throws MyException {
-        MyStack<IStmt> exeStack = new MyStack<>();
-        MyDictionary<String, IValue> symtable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
-
         PrintStmt stmt = new PrintStmt(new ValueExp(new IntValue(5)));
 
-        PrgState state = new PrgState(exeStack,symtable,out,stmt);
+        PrgState state = PrgState.of(stmt);
 
         stmt.execute(state);
 
-        assertEquals(1, out.size());
+        assertEquals(1, state.getOut().size());
     }
 
 }

@@ -3,6 +3,7 @@ package interpreter.model.adt;
 import interpreter.exceptions.ADTException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MyDictionary<K, V> implements IDictionary<K, V> {
     // Reminder 1 : Constructor - Java automatically generates a constructor with no parameters if u dont write ur custom constructor (the HashMap is created internally, we don't pass it as parameter, so that's why we don't need it in the constructor
@@ -27,6 +28,16 @@ public class MyDictionary<K, V> implements IDictionary<K, V> {
         // The key exists, so put() only updates its value. It doesn't add a new entry
         dictionary.put(key, value);
 
+    }
+    @Override public void remove(K key) throws ADTException{
+        if(!dictionary.containsKey(key)){
+            throw new ADTException("No dictionary entry with given key");
+        }
+        dictionary.remove(key);
+    }
+    @Override
+    public Map<K, V> toMap(){
+        return Map.copyOf(dictionary);
     }
     @Override public String toString() {return dictionary.toString();}
 }

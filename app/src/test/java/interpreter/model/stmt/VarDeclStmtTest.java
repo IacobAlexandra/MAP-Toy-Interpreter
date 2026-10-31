@@ -17,29 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VarDeclStmtTest {
     @Test
-    void executeVarDeclDeclares() throws MyException { //:^)
-        MyStack<IStmt> exeStack = new MyStack<>();
-        MyDictionary<String, IValue> symtable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
-
+    void executeVarDeclDeclares() throws MyException {
         VarDeclStmt stmt = new VarDeclStmt("woop", new IntType());
 
-        PrgState state = new PrgState(exeStack, symtable, out, stmt);
+        PrgState state = PrgState.of(stmt);
         stmt.execute(state);
 
-        assertEquals(new IntValue(0), symtable.lookup("woop"));
+        assertEquals(new IntValue(0), state.getSymTable().lookup("woop"));
     }
 
     @Test
     void alreadyDeclaredVariableThrows () throws MyException{
-        MyStack<IStmt> exeStack = new MyStack<>();
-        MyDictionary<String, IValue> symtable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
-
         VarDeclStmt stmt1 = new VarDeclStmt("woop",new IntType());
         VarDeclStmt stmt2 = new VarDeclStmt("woop",new IntType());
 
-        PrgState state = new PrgState(exeStack,symtable,out,stmt1);
+        PrgState state = PrgState.of(stmt1);
 
         stmt1.execute(state);
 
