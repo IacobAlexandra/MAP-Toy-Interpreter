@@ -46,4 +46,30 @@ public class Examples {
         new AssignStmt("v", new ValueExp(new IntValue(2))), // (if a then v ...
             new AssignStmt("v", new ValueExp(new IntValue(3)))), //(if a then v = 2 else v = 3)
                 new PrintStmt(new VarExp("v")))))); // print(v)
+
+
+    /* EX4/fileExample:
+
+    tring varf; varf = filename; openRFile(varf);
+    int varc; readFile(varf, varc); print(varc)
+    readFile(varf, varc); print(varc);
+    closeRFile(varf);
+     */
+    public static IStmt fileExample(String fileName) {
+        return new CompStmt(new VarDeclStmt("varf", new StringType()),  // string varf
+                new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),     // varf = filename
+                        new CompStmt(new OpenRFileStmt(new VarExp("varf")),     // openRFile(varf)
+                                new CompStmt(new VarDeclStmt("varc", new IntType()),    // int varc;
+                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),  // readFile(varf, varc)
+                                                new CompStmt(new PrintStmt(new VarExp("varc")), // print(varc)
+                                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),  // readFile(varf, varc)
+                                                                new CompStmt(new PrintStmt(new VarExp("varc")),     // print(varc)
+                                                                        new CloseRFileStmt(new VarExp("varf")   // closeRFile(varf)
+                                                                        )))))))));
+    }
+    public static final IStmt EX4 = fileExample("test.in");
+
+    // TODO: EX5 – int a; int b; a = 5; b = 7;
+    // (if a < b then print(a) else print(b))
 }
+

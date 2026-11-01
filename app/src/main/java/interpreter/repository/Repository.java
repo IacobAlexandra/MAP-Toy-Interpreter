@@ -1,23 +1,38 @@
 package interpreter.repository;
 
+import interpreter.exceptions.*;
 import interpreter.model.PrgState;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Repository implements IRepository {
-    //NOTE: We use List, not IList
+    private final List<PrgState> states = new ArrayList<>();
+    private final String logFilePath;
 
-    //NOTE: final means we cant reassign the object,
-    // but, yeah, we can still do stuff inside it
-    private final List<PrgState> programs = new ArrayList<>();
-
-
-    public Repository(PrgState state){
-        this.programs.add(state);
+    public Repository(PrgState initial, String logFilePath) {
+        states.add(initial);
+        this.logFilePath = logFilePath;
     }
+    @Override
+    public PrgState getCrtPrg() {  return states.getFirst();}
 
     @Override
-    //For A2 we have only one programstate, so we just hardcode position 0
-    public PrgState getCrtPrg() { return programs.get(0);}
+    public void logPrgStateExec() throws MyException {
+        /*
+            ~ try-with-resources ~
+
+         */
+        try (var logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) { // append
+            logFile.println(getCrtPrg().toLogString());
+        }
+        catch (IOException e) {
+            throw new RepositoryException("cannot write the log file " + logFilePath + ": " + e.getMessage());
+        }
+    }
+
 }

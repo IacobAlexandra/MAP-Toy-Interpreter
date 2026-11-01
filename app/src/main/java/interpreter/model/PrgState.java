@@ -53,7 +53,23 @@ public class PrgState {
     }
     public void setFileTable(IDictionary<StringValue, BufferedReader> newFileTable) {fileTable = newFileTable;}
 
+    // Note: the file is opened in APPEND MODE, so running the program again adds to the old log. Delete the log
+    //  files before a demonstration.
+    public String toLogString() {
+        var sb = new StringBuilder();
+        sb.append("ExeStack:\n");
+        exeStack.toList().forEach(s -> sb.append(s).append('\n'));
+        sb.append("SymTable:\n");
+        symTable.toMap().forEach((k, v) ->
+                sb.append(k).append(" --> ").append(v).append('\n'));
+        sb.append("Out:\n");
+        out.toList().forEach(v -> sb.append(v).append('\n'));
+        sb.append("FileTable:\n");
+        fileTable.toMap().keySet().forEach(f -> sb.append(f.val()).append('\n'));
+        return sb.toString();
+    }
+
     @Override public String toString() {
-        return String.format("%-90s | %-25s | %-25%s | %-25s ",exeStack, symTable, out, fileTable);
+        return String.format("%-90s | %-25s | %-25%s | %-25s",exeStack, symTable, out, fileTable);
     }
 }
