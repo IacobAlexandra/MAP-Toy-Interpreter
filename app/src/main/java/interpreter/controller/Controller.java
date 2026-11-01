@@ -19,8 +19,6 @@ public class Controller {
         this.displayFlag = displayFlag; // for displaying the execution trace
     }
 
-    //display – prints the program state after each step when a display flag is set
-    // (see the trace in section 3.3)
     private void display(PrgState prg){
         if (displayFlag) {
             System.out.println(prg);
@@ -42,7 +40,8 @@ public class Controller {
         repo.logPrgStateExec();
 
         if (displayFlag)
-            System.out.printf("%-90s | %-25s | %-25%s | %-25s", "ExeStack", "SymTable", "Out", "FileTable");
+            System.out.printf("%n%-90s | %-20s | %-12s | %s%n",
+                    "ExeStack", "SymTable", "Out", "FileTable");
 
         display(prg);
         while (!prg.getExeStack().isEmpty()) {

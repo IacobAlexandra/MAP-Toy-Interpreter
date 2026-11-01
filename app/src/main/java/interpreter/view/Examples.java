@@ -23,7 +23,7 @@ public class Examples {
     new CompStmt(new VarDeclStmt("b", new IntType()), // int b;
 
     new CompStmt(new AssignStmt("a", // a = ...
-        new ArithExp(ArithOp.ADD, new ValueExp(new IntValue(2)), // a = 2 + ..
+        new ArithExp(ArithOp.ADD, new ValueExp(new IntValue(2)), // a = 2 + ...
             new ArithExp(ArithOp.MUL, new ValueExp(new IntValue(3)), // a = 2 + 3 * ...
                 new ValueExp(new IntValue(5))))), // a = 2 + 3 * 5;
                     new CompStmt(new AssignStmt("b", // b =...
@@ -57,19 +57,37 @@ public class Examples {
      */
     public static IStmt fileExample(String fileName) {
         return new CompStmt(new VarDeclStmt("varf", new StringType()),  // string varf
-                new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),     // varf = filename
-                        new CompStmt(new OpenRFileStmt(new VarExp("varf")),     // openRFile(varf)
-                                new CompStmt(new VarDeclStmt("varc", new IntType()),    // int varc;
-                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),  // readFile(varf, varc)
-                                                new CompStmt(new PrintStmt(new VarExp("varc")), // print(varc)
-                                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),  // readFile(varf, varc)
-                                                                new CompStmt(new PrintStmt(new VarExp("varc")),     // print(varc)
-                                                                        new CloseRFileStmt(new VarExp("varf")   // closeRFile(varf)
-                                                                        )))))))));
+
+         new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),     // varf = filename
+
+         new CompStmt(new OpenRFileStmt(new VarExp("varf")),     // openRFile(varf)
+
+         new CompStmt(new VarDeclStmt("varc", new IntType()),    // int varc;
+
+         new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),  // readFile(varf, varc)
+
+         new CompStmt(new PrintStmt(new VarExp("varc")), // print(varc)
+
+         new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),  // readFile(varf, varc)
+
+         new CompStmt(new PrintStmt(new VarExp("varc")),     // print(varc)
+
+         new CloseRFileStmt(new VarExp("varf")   // closeRFile(varf)
+
+         )))))))));
     }
     public static final IStmt EX4 = fileExample("test.in");
 
-    // TODO: EX5 – int a; int b; a = 5; b = 7;
-    // (if a < b then print(a) else print(b))
+    // EX5: int a; int b; a = 5; b = 7; (if a < b then print(a) else print(b))
+    public static final IStmt EX5 =
+            new CompStmt(
+                new CompStmt(new VarDeclStmt("a",new IntType()),
+                    new CompStmt(new VarDeclStmt("b",new IntType()),
+                        new CompStmt(new AssignStmt("a",new ValueExp(new IntValue(5))),
+                                            new AssignStmt("b",new ValueExp(new IntValue(7)))))),
+                new IfStmt(new RelationalExp(RelOp.LT,new VarExp("a"), new VarExp("b")),
+                                new PrintStmt(new VarExp("a")), new PrintStmt(new VarExp("b"))));
+
+
 }
 

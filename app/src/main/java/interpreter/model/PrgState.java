@@ -31,13 +31,19 @@ public class PrgState {
     public IStack<IStmt> getExeStack() {
         return exeStack;
     }
+
     public IDictionary<String, IValue> getSymTable() {
         return symTable;
     }
+
     public IList<IValue> getOut() {
         return out;
     }
-    public IDictionary<StringValue, BufferedReader> getFileTable() {return fileTable;}
+
+    public IDictionary<StringValue, BufferedReader> getFileTable() {
+        return fileTable;
+    }
+
     public IStmt getOriginalProgram() {
         return originalProgram;
     }
@@ -45,13 +51,18 @@ public class PrgState {
     public void setExeStack(IStack<IStmt> newExeStack) {
         exeStack = newExeStack;
     }
+
     public void setSymTable(IDictionary<String, IValue> newSymTable) {
         symTable = newSymTable;
     }
+
     public void setOut(IList<IValue> newOut) {
         out = newOut;
     }
-    public void setFileTable(IDictionary<StringValue, BufferedReader> newFileTable) {fileTable = newFileTable;}
+
+    public void setFileTable(IDictionary<StringValue, BufferedReader> newFileTable) {
+        fileTable = newFileTable;
+    }
 
     // Note: the file is opened in APPEND MODE, so running the program again adds to the old log. Delete the log
     //  files before a demonstration.
@@ -69,7 +80,27 @@ public class PrgState {
         return sb.toString();
     }
 
-    @Override public String toString() {
-        return String.format("%-90s | %-25s | %-25%s | %-25s",exeStack, symTable, out, fileTable);
+    @Override
+    public String toString() {
+        String stackText = exeStack.toString();
+        StringBuilder result = new StringBuilder();
+        int maxWidth = 90;
+
+        // exp for 205 chars: [0-90] [90-180] [180-205]
+        for (int start = 0; start < stackText.length(); start += maxWidth) {
+            int end = Math.min(start + maxWidth, stackText.length());
+            String part = stackText.substring(start, end);
+
+            if (start == 0) {
+                result.append(String.format("%-90s | %-20s | %-12s | %s", part, symTable, out, fileTable));
+            } else {
+                result.append(System.lineSeparator());
+                result.append(String.format("%-90s | %-20s | %-12s | %s", part, "", "", ""));
+            }
+        }
+
+        result.append(System.lineSeparator());
+
+        return result.toString(); // convert StringBuilder to String
     }
 }
