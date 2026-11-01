@@ -3,7 +3,6 @@ package interpreter.model.adt;
 import interpreter.exceptions.ADTException;
 import java.util.Map;
 
-// IDictionary<K, V> / MyDictionary<K, V>: isDefined, lookup, put, update
 // (wraps a HashMap)
 
 public interface IDictionary<K,V> {
