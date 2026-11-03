@@ -32,3 +32,4 @@ public class Main {
 
 // .\gradlew build
 // .\gradlew.bat run --console=plain
+// git switch --detach A3 ( nu uita `git switch main` la final)
