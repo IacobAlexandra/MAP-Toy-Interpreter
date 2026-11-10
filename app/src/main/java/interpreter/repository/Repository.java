@@ -23,10 +23,7 @@ public class Repository implements IRepository {
 
     @Override
     public void logPrgStateExec() throws MyException {
-        /*
-            ~ try-with-resources ~
 
-         */
         try (var logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) { // append
             logFile.println(getCrtPrg().toLogString());
         }
