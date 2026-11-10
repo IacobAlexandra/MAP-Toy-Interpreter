@@ -19,7 +19,7 @@ public record IfStmt(IExp cond, IStmt thenS, IStmt elseS) implements IStmt {
         //  1. Verifies that its a bool
         //  2. extracts the value in b
 
-        if (!(cond.eval(state.getSymTable()) instanceof BoolValue(boolean b))){
+        if (!(cond.eval(state.getSymTable(), state.getHeap()) instanceof BoolValue(boolean b))){
             throw new StatementException("Condition is not a boolean.");
         }
 

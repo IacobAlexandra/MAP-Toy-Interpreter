@@ -2,6 +2,7 @@ package interpreter.model.exp;
 
 import interpreter.exceptions.*;
 import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.IHeap;
 import interpreter.model.value.*;
 
 //  (and, or – both operands must be booleans)
@@ -12,12 +13,12 @@ public record LogicExp(LogicOp op, IExp left, IExp right) implements IExp {
     //  2. extract left's value in b1
     //(use left.eval(symTable) instanceof IntValue if u only want the verification)
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) throws MyException{
+    public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException{
 
-        if (!(left.eval(symTable) instanceof BoolValue(boolean b1)))
+        if (!(left.eval(symTable,heap) instanceof BoolValue(boolean b1)))
             throw new ExpressionException("first operand is not a boolean");
 
-        if (!(right.eval(symTable) instanceof BoolValue(boolean b2)))
+        if (!(right.eval(symTable,heap) instanceof BoolValue(boolean b2)))
             throw new ExpressionException("second operand is not a boolean");
 
         return switch (op){

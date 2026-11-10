@@ -34,7 +34,7 @@ class FileStmtTest {
     @Test
     void readGivesTheNextNumberThenZeroAtTheEnd() throws MyException {
         new OpenRFileStmt(file).execute(state);
-        assertTrue(state.getFileTable().isDefined((StringValue) file.eval(state.getSymTable())));
+        assertTrue(state.getFileTable().isDefined((StringValue) file.eval(state.getSymTable(),state.getHeap())));
 
         new ReadFileStmt(file, "x").execute(state);
         assertEquals(new IntValue(7), state.getSymTable().lookup("x"));
@@ -87,7 +87,7 @@ class FileStmtTest {
     void closingFileRemovesFromFileTable() throws MyException{
         new OpenRFileStmt(file).execute(state);
         new CloseRFileStmt(file).execute(state);
-        assertFalse(state.getFileTable().isDefined((StringValue) file.eval(state.getSymTable())));
+        assertFalse(state.getFileTable().isDefined((StringValue) file.eval(state.getSymTable(),state.getHeap())));
     }
     @Test
     void closingFileNotOpenedThrows() throws MyException{

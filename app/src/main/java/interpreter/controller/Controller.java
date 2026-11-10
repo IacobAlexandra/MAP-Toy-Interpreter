@@ -40,8 +40,9 @@ public class Controller {
         repo.logPrgStateExec();
 
         if (displayFlag)
-            System.out.printf("%n%-90s | %-20s | %-12s | %s%n",
-                    "ExeStack", "SymTable", "Out", "FileTable");
+            System.out.printf(
+                    "%n%-90s | %-20s | %-12s | %-25s | %s%n",
+                    "ExeStack", "SymTable", "Out", "FileTable", "Heap");
 
         display(prg);
         while (!prg.getExeStack().isEmpty()) {

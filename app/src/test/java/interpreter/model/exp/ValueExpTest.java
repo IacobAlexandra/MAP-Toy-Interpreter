@@ -1,6 +1,7 @@
 package interpreter.model.exp;
 
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,8 @@ public class ValueExpTest {
     @Test
     void evalValReturnsConstant(){
         MyDictionary<String, IValue> symtable = new MyDictionary<>();
+        MyHeap heap = new MyHeap();
         ValueExp exp = new ValueExp(new IntValue(5));
-        assertEquals(new IntValue(5), exp.eval(symtable));
+        assertEquals(new IntValue(5), exp.eval(symtable,heap));
     }
 }

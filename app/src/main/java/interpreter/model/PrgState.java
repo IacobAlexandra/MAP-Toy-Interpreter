@@ -5,6 +5,7 @@ import interpreter.model.stmt.*;
 import interpreter.model.value.*;
 
 import java.io.BufferedReader;
+import java.util.TreeMap;
 
 public class PrgState {
     private IStack<IStmt> exeStack;
@@ -12,20 +13,22 @@ public class PrgState {
     private IList<IValue> out;
     private IDictionary<StringValue, BufferedReader> fileTable;
     private final IStmt originalProgram;    // Keeps the original program for display, since exeStack is emptied during execution.
+    private final IHeap heap;
 
     public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
-                    IList<IValue> out, IDictionary<StringValue, BufferedReader> fileTable, IStmt program) {
+                    IList<IValue> out, IDictionary<StringValue,BufferedReader> fileTable, IHeap heap, IStmt program) {
         this.exeStack = exeStack;
         this.symTable = symTable;
         this.out = out;
         this.fileTable = fileTable;
+        this.heap = heap;
         this.originalProgram = program;
         exeStack.push(program);
     }
 
     public static PrgState of(IStmt program) {
         return new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(),
-                new MyDictionary<>(), program);
+                new MyDictionary<>(), new MyHeap(), program);
     }
 
     public IStack<IStmt> getExeStack() {
@@ -47,6 +50,8 @@ public class PrgState {
     public IStmt getOriginalProgram() {
         return originalProgram;
     }
+
+    public IHeap getHeap() {return heap;}
 
     public void setExeStack(IStack<IStmt> newExeStack) {
         exeStack = newExeStack;
@@ -77,6 +82,11 @@ public class PrgState {
         out.toList().forEach(v -> sb.append(v).append('\n'));
         sb.append("FileTable:\n");
         fileTable.toMap().keySet().forEach(f -> sb.append(f.val()).append('\n'));
+        sb.append("Heap:\n");
+        // "Sort the addresses, so that two logs of the same program are identical"
+        new TreeMap<>(heap.getContent()).forEach((address, value) ->
+                sb.append(address).append(" --> ").append(value).append('\n'));
+
         return sb.toString();
     }
 
@@ -92,10 +102,10 @@ public class PrgState {
             String part = stackText.substring(start, end);
 
             if (start == 0) {
-                result.append(String.format("%-90s | %-20s | %-12s | %s", part, symTable, out, fileTable));
+                result.append(String.format("%-90s | %-20s | %-12s | %-25s | %s", part, symTable, out, fileTable, heap));
             } else {
                 result.append(System.lineSeparator());
-                result.append(String.format("%-90s | %-20s | %-12s | %s", part, "", "", ""));
+                result.append(String.format("%-90s | %-20s | %-12s | %s | %-12s |", part, "", "", "",""));
             }
         }
 
