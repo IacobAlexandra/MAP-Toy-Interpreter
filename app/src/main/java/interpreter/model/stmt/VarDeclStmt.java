@@ -23,8 +23,6 @@ public record VarDeclStmt(String name, IType type) implements IStmt{
 
         symTable.put(name, type.defaultValue());
         return state;
-        //NOTE: I believe it's redundant to return the Prg State, right? Could've used void
-            // cus we already make the changes in the original object
     }
     @Override
     public String toString() { return type + " " + name;}
