@@ -10,7 +10,7 @@ import interpreter.repository.*;
 public class Main {
     public static void main(String[] args) {
         List<IStmt> programs = List.of(Examples.EX1, Examples.EX2, Examples.EX3,
-                Examples.EX4, Examples.EX5);
+                Examples.EX4, Examples.EX5, Examples.EX6, Examples.EX7, Examples.EX8, Examples.EX9, Examples.EX10);
 
         TextMenu menu = new TextMenu();
 
@@ -29,7 +29,6 @@ public class Main {
     }
 }
 
-
 // .\gradlew build
-// .\gradlew.bat run --console=plain
+// .\gradlew run --console=plain
 // git switch --detach A3 ( nu uita `git switch main` la final)

@@ -5,6 +5,8 @@ import interpreter.model.PrgState;
 import interpreter.model.stmt.IStmt;
 import interpreter.repository.IRepository;
 
+import static interpreter.controller.GarbageCollector.*;
+
 public class Controller {
     private final IRepository repo;
     private boolean displayFlag;
@@ -41,12 +43,17 @@ public class Controller {
 
         if (displayFlag)
             System.out.printf(
-                    "%n%-90s | %-20s | %-12s | %-25s | %s%n",
+                    "%n%-50s | %-22s | %-20s | %-12s | %-24s%n",
                     "ExeStack", "SymTable", "Out", "FileTable", "Heap");
 
         display(prg);
+
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
+            repo.logPrgStateExec();
+            prg.getHeap().setContent(safeGarbageCollector(
+                    getAddrFromSymTable(prg.getSymTable().toMap().values()),
+                    prg.getHeap().getContent()));
             repo.logPrgStateExec();
             display(prg);
         }

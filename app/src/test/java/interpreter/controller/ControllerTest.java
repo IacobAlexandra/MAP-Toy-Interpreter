@@ -5,7 +5,10 @@ import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
 import interpreter.model.adt.*;
 import interpreter.model.stmt.*;
+import interpreter.model.type.IntType;
+import interpreter.model.type.RefType;
 import interpreter.model.value.IntValue;
+import interpreter.model.value.RefValue;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
@@ -97,4 +100,58 @@ class ControllerTest {
         assertTrue(state.getExeStack().isEmpty());
         assertEquals(new IntValue(5), state.getOut().get(0));
     }
+
+    @Test
+    void example6PrintsReferences() throws MyException {
+        PrgState state = run(Examples.EX6);
+
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(2, state.getOut().size());
+        assertEquals(new RefValue(1, new IntType()), state.getOut().get(0));
+        assertEquals(new RefValue(2, new RefType(new IntType())),
+                state.getOut().get(1));
+    }
+
+    @Test
+    void example7Prints20And25() throws MyException {
+        PrgState state = run(Examples.EX7);
+
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(2, state.getOut().size());
+        assertEquals(new IntValue(20), state.getOut().get(0));
+        assertEquals(new IntValue(25), state.getOut().get(1));
+    }
+
+    @Test
+    void example8Prints20And35() throws MyException {
+        PrgState state = run(Examples.EX8);
+
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(2, state.getOut().size());
+        assertEquals(new IntValue(20), state.getOut().get(0));
+        assertEquals(new IntValue(35), state.getOut().get(1));
+    }
+
+    @Test
+    void example9Prints20() throws MyException {
+        PrgState state = run(Examples.EX9);
+
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(1, state.getOut().size());
+        assertEquals(new IntValue(20), state.getOut().get(0));
+    }
+
+    @Test
+    void example10Prints4To0() throws MyException {
+        PrgState state = run(Examples.EX10);
+
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(5, state.getOut().size());
+
+        for (int i = 0; i < 5; i++) {
+            assertEquals(new IntValue(4 - i), state.getOut().get(i));
+        }
+    }
+
+
 }
