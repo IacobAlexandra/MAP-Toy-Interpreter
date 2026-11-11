@@ -90,27 +90,53 @@ public class PrgState {
         return sb.toString();
     }
 
-    @Override
-    public String toString() {
-        String stackText = exeStack.toString();
-        StringBuilder result = new StringBuilder();
-        int maxWidth = 90;
+    // Extract the part of a column that belongs on the given row
+    private String columnPart(String text, int width, int row) {
+        int start = row * width; // width 50: row 0 starts at 0, row 1 at 50 ...
 
-        // exp for 205 chars: [0-90] [90-180] [180-205]
-        for (int start = 0; start < stackText.length(); start += maxWidth) {
-            int end = Math.min(start + maxWidth, stackText.length());
-            String part = stackText.substring(start, end);
-
-            if (start == 0) {
-                result.append(String.format("%-90s | %-20s | %-12s | %-25s | %s", part, symTable, out, fileTable, heap));
-            } else {
-                result.append(System.lineSeparator());
-                result.append(String.format("%-90s | %-20s | %-12s | %s | %-12s |", part, "", "", "",""));
-            }
+        if (start >= text.length()) {
+            return "";
         }
 
-        result.append(System.lineSeparator());
+        int end = Math.min(start + width, text.length());   // Avoid going past the end of the text on the last row
 
-        return result.toString(); // convert StringBuilder to String
+        return text.substring(start, end); // [start, end)
+    }
+
+    @Override
+    public String toString() {
+        String[] columns = {
+                exeStack.toString(),
+                symTable.toString(),
+                out.toString(),
+                fileTable.toString(),
+                heap.toString()
+        };
+
+        int[] maxWidths = {50, 22, 20, 12, 24}; // = max chars per row for each column
+
+        // Find how many rows the longest column needs
+        int rows = 1;
+        for (int i = 0; i < columns.length; i++) {
+            int neededRows = (columns[i].length() + maxWidths[i] - 1) / maxWidths[i];
+            rows = Math.max(rows, neededRows);
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        for (int row = 0; row < rows; row++) {
+            // Extract each column's part for this row
+            // %-50s = left-aligned + padded with spaces to at least 50 chars
+            // %n = newline, at the end of the row
+            result.append(String.format(
+                    "%-50s | %-22s | %-20s | %-12s | %-24s%n",
+                    columnPart(columns[0], maxWidths[0], row),
+                    columnPart(columns[1], maxWidths[1], row),
+                    columnPart(columns[2], maxWidths[2], row),
+                    columnPart(columns[3], maxWidths[3], row),
+                    columnPart(columns[4], maxWidths[4], row)));
+        }
+
+        return result.toString();
     }
 }
