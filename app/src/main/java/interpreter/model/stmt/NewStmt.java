@@ -29,6 +29,8 @@ public record NewStmt(String varName, IExp exp) implements IStmt { // S11
         // get the value t
         IValue value = exp.eval(symTable, state.getHeap());
 
+        // NOTE: In our ToyLanguage, the data type allocated to an address (aka `locationType`) is FINAL.
+        //      You can only update the value, but not the type
         if (!value.getType().equals(ref.locationType()))
             throw new StatementException("new: " + exp + " has type " + value.getType()
                     + ", expected " + ref.locationType());

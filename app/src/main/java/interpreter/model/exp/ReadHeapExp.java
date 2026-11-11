@@ -19,17 +19,14 @@ public record ReadHeapExp(IExp exp) implements IExp {
     public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException{
 
         IValue value = exp.eval(symTable,heap);
-        if(!(value instanceof RefValue)){
-            throw new ExpressionException("Value " + value.toString() + " is not a reference!");
+        if(!(value instanceof RefValue ref)){   // DOWNCAST
+            throw new ExpressionException("Rh: Value " + value.toString() + " is not a reference!");
         }
-        // downcast
-        RefValue ref = (RefValue) value;        //(address, locationType). the value is the content of the Heap at address a
 
         int address = ref.address();
 
         try{
-            IValue valueInHeap = heap.get(address);
-            return valueInHeap;
+            return heap.get(address);
         }
         catch (ADTException e) {
             throw new ExpressionException(e.getMessage());
